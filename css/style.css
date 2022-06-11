@@ -1,0 +1,11 @@
+body {
+  height: 100vh;
+  background: linear-gradient(to top left, #28b487, #7dd56f);
+  display: flex;
+  color: #fff;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+h1 {
+  margin: 15px;
+}
