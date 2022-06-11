@@ -128,7 +128,7 @@ const same1 = (a1, a2) => {
   // map each item of a1 into object o1 {1:1,2:1,3: 1}
   let o1 = {};
   for (const element of a1) {
-    o1[`${element}`] ? o1[`${element}`]++ : (o1[`${element}`] = 1);
+    o1[element] ? o1[element]++ : (o1[element] = 1);
   }
 
   // loop over a2
@@ -243,3 +243,44 @@ console.log(
   )
 );
 console.timeEnd("same using frequency counter");
+
+console.clear();
+
+// Input: s = "anagram", t = "nagaram"
+// Output: true
+
+// Input: (s = "rat"), (t = "car");
+// Output: false;
+const validAnagram = (s1, s2) => {
+  // check if length of s1 and s2 are equal
+  if (s1.length !== s2.length) {
+    return false;
+  }
+
+  let o1 = {};
+  let o2 = {};
+  // map each char of o1
+  for (ele of s1) {
+    o1[ele]++ || (o1[ele] = 1);
+  }
+
+  // map each char of o2
+  for (ele of s2) {
+    o2[ele]++ || (o2[ele] = 1);
+  }
+
+  // verify if key and value of o1 is present in o2
+  for (ele of s1) {
+    //  check keys of o2
+    debugger;
+    if (!(ele in o2)) {
+      return false;
+    }
+    // check values o1 and o2
+    if (o1[ele] !== o2[ele]) {
+      return false;
+    }
+  }
+  return true;
+};
+console.log(validAnagram("rat", "car"));
