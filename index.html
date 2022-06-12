@@ -10,5 +10,10 @@
   <body>
     <h1></h1>
   </body>
-  <script src="./js/frequency-counter.js"></script>
+  <script src="./js/multiple-pointer.js"></script>
+  <script>
+    let fs = document.scripts[1].src.split("/");
+    fs = fs[fs.length - 1].split(".")[0].replace("-", " ");
+    document.querySelector("h1").innerText = fs;
+  </script>
 </html>
