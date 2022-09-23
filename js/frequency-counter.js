@@ -1,6 +1,6 @@
 document.querySelector("h1").innerText = "Frequency Counter";
 
-// to calculate if given array have same frequency or not
+// to calculate if given array have same frequency or not .
 // array1 should be square of array2 , order of items does not matter.
 
 // eg [1,2,3] , [4,1,9] => true
