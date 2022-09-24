@@ -246,6 +246,38 @@ console.timeEnd("same using frequency counter");
 
 console.clear();
 
+const same2 = function (a1, a2) {
+  // check if length of a1 and a2 are same, if not return false
+  if (a1.length !== a2.length) {
+    return false;
+  }
+  // create an o1 and o2
+  let o1 = {};
+  let o2 = {};
+  // loop inside a1 to get o1, the keys should be squared and values should be the count
+  a1.forEach((i) => {
+    o1[i * i] ? o1[i * i]++ : (o1[i * i] = 1);
+  });
+  // loop inside a2 to get o2
+  a2.forEach((i) => {
+    o2[i] ? o2[i]++ : (o2[i] = 1);
+  });
+
+  // compare if key and value pair of o1 === o2
+  for (key in o1) {
+    if (o1[key] !== o2[key]) {
+      return false;
+    }
+    if (o2?.key) {
+      return false;
+    }
+  }
+  return true;
+  // return true if all the items in a2 are square times of items in a1
+  // else return false
+};
+console.log(same2([1, 3, 2, 10], [4, 1, 9, 100]));
+
 // Input: s = "anagram", t = "nagaram"
 // Output: true
 
