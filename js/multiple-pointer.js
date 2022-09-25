@@ -14,23 +14,32 @@ console.log(sumZero([-3, -2, -1, 0, 1, 2, 3]));
 console.clear();
 
 // using multiple pointer => O(N) time complexity
-const sumZero1 = (a) => {
-  let left = a[0];
+var sumZero1 = (a) => {
+  // define i as first element and j as last
+  let left = 0;
   let right = a.length - 1;
-  while (right > left) {
-    sum = a[left] + a[right];
+  // loop over array and find if sum of i+j is 0 or not.
+  while (left < right) {
+    let sum = a[left] + a[right];
+    console.log(a[left], a[right]);
+    // if i+j=0 return [i,j]
     if (sum === 0) {
       return [a[left], a[right]];
-    } else if (sum > 0) {
+    }
+    //// else if i+j=+ve then i++
+    else if (sum > 0) {
       right--;
-    } else {
+    }
+    //// else if i+j=-ve then j--
+    else {
       left++;
     }
   }
   return false;
 };
-console.log(sumZero1([-7, -4, -3, -1, 0, 1, 2, 3, 4, 6]));
 
+// console.log(sumzero([-7, -4, -3, -1, 0, 1, 2, 3, 4, 6]));
+console.log(sumZero1([-4, -3, -2, -1, 0, 1, 2, 5]));
 // count unique values in a array
 const uniqueValues = (a) => {
   if (a.length === 0) {
