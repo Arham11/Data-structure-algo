@@ -316,3 +316,31 @@ const validAnagram = (s1, s2) => {
   return true;
 };
 console.log(validAnagram("rat", "car"));
+
+
+// Given an array of integers arr, return true if the number of occurrences of each value in the array is unique, or false otherwise.
+// Input: arr = [1,2,2,1,1,3]
+// Output: true
+// Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
+// Input: arr = [1,2]
+// Output: false
+var uniqueOccurrences = function (a1) {
+  if (a1.length < 1 || a1.length >= 1000) {
+    return false;
+  }
+  // create object for arr
+  let o1 = {};
+  for (let i of a1) {
+    if (i >= 1000 || i <= -1000) return false;
+    o1[i] ? o1[i]++ : (o1[i] = 1);
+  }
+  // check if each values are unique
+  //// create a set and check if set size === object size
+  if (new Set(Object.values(o1)).size === Object.values(o1).length) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+console.log(uniqueOccurrences([-1000, 22, 22]));
