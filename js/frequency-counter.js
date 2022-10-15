@@ -29,6 +29,7 @@ const same = (a1, a2) => {
 };
 console.time("same using sort");
 console.log(
+  "sameFrequency",
   same(
     [
       1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1,
@@ -154,6 +155,7 @@ const same1 = (a1, a2) => {
 };
 console.time("same using frequency counter");
 console.log(
+  "sameFrequency",
   same1(
     [
       1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1, 4, 2, 3, 1,
@@ -244,8 +246,6 @@ console.log(
 );
 console.timeEnd("same using frequency counter");
 
-console.clear();
-
 const same2 = function (a1, a2) {
   // check if length of a1 and a2 are same, if not return false
   if (a1.length !== a2.length) {
@@ -276,7 +276,7 @@ const same2 = function (a1, a2) {
   // return true if all the items in a2 are square times of items in a1
   // else return false
 };
-console.log(same2([1, 3, 2, 10], [4, 1, 9, 100]));
+console.log("sameFrequency2", same2([1, 3, 2, 10], [4, 1, 9, 100]));
 
 // Input: s = "anagram", t = "nagaram"
 // Output: true
@@ -304,7 +304,6 @@ const validAnagram = (s1, s2) => {
   // verify if key and value of o1 is present in o2
   for (ele of s1) {
     //  check keys of o2
-    debugger;
     if (!(ele in o2)) {
       return false;
     }
@@ -315,8 +314,7 @@ const validAnagram = (s1, s2) => {
   }
   return true;
 };
-console.log(validAnagram("rat", "car"));
-
+console.log("validAnagram - ", validAnagram("rat", "car"));
 
 // Given an array of integers arr, return true if the number of occurrences of each value in the array is unique, or false otherwise.
 // Input: arr = [1,2,2,1,1,3]
@@ -324,7 +322,7 @@ console.log(validAnagram("rat", "car"));
 // Explanation: The value 1 has 3 occurrences, 2 has 2 and 3 has 1. No two values have the same number of occurrences.
 // Input: arr = [1,2]
 // Output: false
-var uniqueOccurrences = function (a1) {
+let uniqueOccurrences = function (a1) {
   if (a1.length < 1 || a1.length >= 1000) {
     return false;
   }
@@ -336,11 +334,24 @@ var uniqueOccurrences = function (a1) {
   }
   // check if each values are unique
   //// create a set and check if set size === object size
-  if (new Set(Object.values(o1)).size === Object.values(o1).length) {
-    return true;
-  } else {
-    return false;
-  }
+  return new Set(Object.values(o1)).size === Object.values(o1).length;
 };
 
-console.log(uniqueOccurrences([-1000, 22, 22]));
+console.log("uniqueOccurrences - ", uniqueOccurrences([-11, 22]));
+console.log("uniqueOccurrences - ", uniqueOccurrences([1, 2, 2, 1, 1, 3]));
+console.clear();
+
+// Implement a function called, areThereDuplicates which accepts a variable number of
+// arguments, and checks whether there are any duplicates among the arguments passed in.
+// You can solve this using the frequency counter pattern OR the multiple pointers pattern.
+// areThereDuplicates(1, 2, 3) // false
+// areThereDuplicates(1, 2, 2) // true
+// areThereDuplicates('a', 'b', 'c', 'a') // true
+// o(1) time complexity
+function areThereDuplicates(...a) {
+  return new Set(Object.values(a)).size === Object.values(a).length;
+}
+
+console.log(areThereDuplicates(1, 2, 3)); // false
+console.log(areThereDuplicates(1, 2, 2)); // true
+console.log(areThereDuplicates("a", "b", "c", "a")); // true

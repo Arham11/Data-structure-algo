@@ -14,7 +14,7 @@ console.log(sumZero([-3, -2, -1, 0, 1, 2, 3]));
 console.clear();
 
 // using multiple pointer => O(N) time complexity
-var sumZero1 = (a) => {
+const sumZero1 = (a) => {
   // define i as first element and j as last
   let left = 0;
   let right = a.length - 1;
@@ -90,3 +90,76 @@ const countUniqueVal = (a1) => {
 };
 
 console.log(countUniqueVal([1, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 5, 100, 200]));
+console.clear();
+
+// Write a function called averagePair. Given a sorted array of integers and a target average,
+// determine if there is a pair of values in the array where the average of the pair
+// equals the target average. There may be more than one pair that matches the average target.
+// Sample Input:
+// averagePair([1,2,3],2.5) // true
+// averagePair([1,3,3,5,6,7,10,12,19],8) // true
+// averagePair([-1,0,3,4,5,6], 4.1) // false
+// averagePair([],4) // false
+
+const averagePair = function (a1, avgNum) {
+  // define start and end
+  let start = 0;
+  let end = a1.length - 1;
+  // loop using while with terminating cond as start < end
+  while (start < end) {
+    // calculate avg = (start + end) / 2
+    let avg = (a1[start] + a1[end]) / 2;
+    // console.log("----", avg, a1[start], a1[end]);
+    // if avg === avgNum then return true
+    if (avg === avgNum) return true;
+    // if (avg > avgNum) then  end--
+    else if (avg > avgNum) {
+      end--;
+    }
+    // if avg < avgNum then start ++
+    else {
+      start++;
+    }
+  }
+  return false;
+};
+
+console.log(averagePair([1, 2, 3], 2.5)); // true
+// console.log(averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8)); // true
+console.log(averagePair([-1, 0, 3, 4, 5, 6], 4.1)); // false
+console.log(averagePair([], 4)); // false
+
+console.clear();
+//isSubsequence
+// Write a function called isSubsequence which takes in two strings and checks
+// whether the characters in the first string form a subsequence of the characters
+// in the second string. In other words, the function should check whether the characters
+// in the first string appear somewhere in the second string, without their order changing.
+// isSubsequence('hello', 'hello world'); // true
+// isSubsequence('sing', 'sting'); // true
+// isSubsequence('abc', 'abracadabra'); // true
+// isSubsequence('abc', 'acb'); // false (order matters)
+
+const isSubsequence = function (find, str) {
+  // declare a variable as s = 0 for find
+  let s = 0;
+  // for loop over str (i =0)
+  for (let i = 0; i < str.length; i++) {
+    // if s > find.lenght return true
+    if (s > find.length - 1) {
+      return true;
+    }
+    // if find[s] === str[i] then s++ and countinue looping
+    if (find[s] === str[i]) {
+      //console.log(s, find[s], str[i]);
+      s++;
+    }
+  }
+  console.log("s", s);
+  // sc : if looping over str finishes and truth condition is found at last
+  return s === find.length;
+};
+console.log(isSubsequence("hello", "hello world")); // true
+console.log(isSubsequence("sing", "sting")); // true
+console.log(isSubsequence("abc", "abracadabra")); // true
+console.log(isSubsequence("abc", "acb")); // false (order matters)

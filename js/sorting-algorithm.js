@@ -89,3 +89,35 @@ console.clear();
 
 // [2,34,22,0,10,19,17]
 //
+function sameFrequency(n1, n2) {
+  // short circuit condition
+  if (Math.ceil(Math.log10(n1 + 1)) !== Math.ceil(Math.log10(n2 + 1))) {
+    return false;
+  }
+
+  // convert the number to string s1,s2
+  const s1 = n1.toString();
+  const s2 = n2.toString();
+  let o1 = {};
+  let o2 = {};
+  // loop over s1 and map each item to Object
+  for (let item of s1) {
+    o1[item] ? o1[item]++ : (o1[item] = 1);
+  }
+  for (let item of s2) {
+    o2[item] ? o2[item]++ : (o2[item] = 1);
+  }
+  console.log(o1, o2);
+  // loop over s2 and check if key and value in s1 is present in s2 or not
+  for (let item in o2) {
+    // key and value
+    if (!o1[item] || o1[item] !== o2[item]) {
+      return false;
+    }
+  }
+  // return false if any value mismatches
+  //else return true
+  return true;
+}
+
+console.log(sameFrequency(182435373, 28713233543));
