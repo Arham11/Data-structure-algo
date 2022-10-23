@@ -62,3 +62,46 @@ const collectOddValues = (a) => {
 console.log(
   collectOddValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 233, 345, 666])
 );
+
+// Write a function called power which accepts a base and an exponent.
+// The function should return the power of the base to the exponent.
+// This function should mimic the functionality of Math.pow()
+// do not worry about negative bases and exponents.
+// power(2,0) // 1
+// power(2,2) // 4
+// power(2,4) // 16
+
+function power(base, expo) {
+  // terminating condition: if expo === 0 return result
+  if (expo === 0) return 1;
+  // recursion: return base * power(base,expo-1)
+  return base * power(base, expo - 1);
+}
+console.log(power(4, 2));
+console.log(power(10, 2));
+
+// Write a function called productOfArray which takes in an array of numbers
+// and returns the product of them all.
+const productOfArray = (arr) => {
+  if (arr.length === 0) return 1;
+  return arr[0] * productOfArray(arr.slice(1));
+};
+console.log(productOfArray([1, 2, 4, 100]));
+
+// Write a function called recursiveRange which accepts a number
+// and adds up all the numbers from 0 to the number passed to the function
+const recursiveRange = (num) => {
+  if (num === 0) return 0;
+  return num + recursiveRange(num - 1);
+};
+console.log(recursiveRange(10));
+
+// Write a recursive function called fib which accepts a number and
+// returns the nth number in the Fibonacci sequence.
+const fib = (n) => {
+  if (n <= 2) return 1;
+  return fib(n - 1) + fib(n - 2);
+};
+console.log(fib(6));
+
+console.clear();
