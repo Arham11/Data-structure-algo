@@ -121,3 +121,37 @@ function sameFrequency(n1, n2) {
 }
 
 console.log(sameFrequency(182435373, 28713233543));
+console.clear();
+
+// important and tough
+const insertion = (a) => {
+  // declare i = 1 , j = i
+  // start for loop from i = 1;
+  for (let i = 1; i < a.length; i++) {
+    let currentValue = a[i];
+    let j = i - 1;
+
+    // while j >= 0 && a[i] > a[j]
+    while (j >= 0 && a[j] > currentValue) {
+      a[j + 1] = a[j];
+      j--;
+      //console.log(a);
+    }
+    a[j + 1] = currentValue;
+  }
+  console.log(a);
+};
+
+insertion([2, 1, 9, 76, 4]);
+
+// [5, 3, 1, 100, 10];
+
+// [5, 3, 1, 100, 10];
+// [3,5,1,100,10]
+// [1,3,5,100,10]
+// [1,3,5,10,100]
+
+// [1, 2, 3, 4, 0]
+//          j   ic
+
+// [1, 2, 3, 4, 4]

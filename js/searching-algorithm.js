@@ -8,7 +8,10 @@ const linearSearch = (a, find) => {
   return -1;
 };
 
-console.log(linearSearch([1, 3, 34, 34, 23, 1, 1, 11, 16, 13, 1116], 119));
+console.log(
+  "linearSearch-- ",
+  linearSearch([1, 3, 34, 34, 23, 1, 1, 11, 16, 13, 1116], 119)
+);
 
 let stateList = [
   "Alaska",
@@ -96,10 +99,28 @@ const search = (a, find) => {
 
   return -1;
 };
-console.log(search([2, 5, 6, 9, 13, 15, 28, 30], 30));
+console.log("search-- ", search([2, 5, 6, 9, 13, 15, 28, 30], 30));
 
 // console.log([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
-console.clear();
+
+const targetSearchNaiveApproach = (s, t) => {
+  // declare the counter
+  let count = 0;
+  // loop over the string
+  for (let i = 0; i < s.length; i++) {
+    // if char at s[i] === t[0]
+    if (s[i] === t[0]) {
+      // loop another loop from j = 0; j < t.lenght; j++
+      for (let j = 0; j < t.length; j++) {
+        // console.log(s[i + j], t[j]);
+        //// if char at s[i+j] !== t[j] return;
+        if (s[i + j] === t[j] && j === t.length - 1) count++;
+      }
+    }
+  }
+  console.log("targetSearchNaiveApproach-- ", count);
+};
+targetSearchNaiveApproach("omgww0omgoozomgomgjjjomg", "omg");
 
 // calculate count of target substring inside a long string
 const searchTarget = (s, t) => {
@@ -120,4 +141,4 @@ const searchTarget = (s, t) => {
   }
   return count;
 };
-console.log(searchTarget("lorie lollol loklol", "lol"));
+console.log("searchTarget-- ", searchTarget("lorie lollol loklol", "lol"));
