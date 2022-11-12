@@ -11,7 +11,6 @@ const bubbleSort = (a) => {
     // second loop teminationg condition keeps on shrinking
     // refer below console.log
     for (let j = 0; j < a.length - (i + 1); j++) {
-      console.log(a, a[j], a[j + 1]);
       if (a[j] > a[j + 1]) {
         // const temp = a[j + 1];
         // a[j + 1] = a[j];
@@ -27,7 +26,7 @@ const bubbleSort = (a) => {
   }
   return a;
 };
-console.log(bubbleSort([4, 5, 3, 2, 6]));
+console.log("bubbleSort-- ", bubbleSort([4, 5, 3, 2, 6]));
 
 // (5) [4, 5, 3, 2, 6] 4 5
 // sorting-algorithm.js:13 (5) [4, 5, 3, 2, 6] 5 3
@@ -64,8 +63,7 @@ const selection = (a) => {
   }
   return a;
 };
-console.log(selection([0, 2, 34, 22, 10, 19, 17]));
-console.clear();
+console.log("selectionSort-- ", selection([0, 2, 34, 22, 10, 19, 17]));
 
 // // 1) insertions Sort
 // const insertion = (a) => {
@@ -121,7 +119,6 @@ function sameFrequency(n1, n2) {
 }
 
 console.log(sameFrequency(182435373, 28713233543));
-console.clear();
 
 // important and tough
 const insertion = (a) => {
@@ -139,19 +136,87 @@ const insertion = (a) => {
     }
     a[j + 1] = currentValue;
   }
-  console.log(a);
+  return a;
 };
 
-insertion([2, 1, 9, 76, 4]);
+console.log("insertionSort-- ", insertion([2, 1, 9, 76, 4]));
 
-// [5, 3, 1, 100, 10];
+console.clear();
+// more advance array
+// 1. Merge Sort,
 
-// [5, 3, 1, 100, 10];
-// [3,5,1,100,10]
-// [1,3,5,100,10]
-// [1,3,5,10,100]
+// -- merge two array
+const merge = (arr1, arr2) => {
+  // declare result
+  // let result = [];
+  // // declare i = 0 and j = 0;
+  // let i = 0,
+  //   j = 0;
+  // // check max lenght of array
+  // let max = a1.length + a2.length;
 
-// [1, 2, 3, 4, 0]
-//          j   ic
+  // // loop over using while
+  // //// condition i === a1.lenght && j === a2.lenght
+  // while (result.length !== max) {
+  //   //// if a1[i] < a2[j] push a1[i] at result, i++
+  //   if (a1[i] < a2[j]) {
+  //     result.push(a1[i]);
+  //     i++;
+  //   }
+  //   //// else push a2[j] at result , j++
+  //   else {
+  //     result.push(a2[j]);
+  //     j++;
+  //   }
+  // }
 
-// [1, 2, 3, 4, 4]
+  // //retrun result
+  // return result;
+  // console.log("-----", arr1, arr2);
+  let results = [];
+  let i = 0;
+  let j = 0;
+
+  while (i < arr1.length && j < arr2.length) {
+    if (arr2[j] > arr1[i]) {
+      results.push(arr1[i]);
+      i++;
+    } else {
+      results.push(arr2[j]);
+      j++;
+    }
+  }
+  while (i < arr1.length) {
+    results.push(arr1[i]);
+    i++;
+  }
+  while (j < arr2.length) {
+    results.push(arr2[j]);
+    j++;
+  }
+  return results;
+};
+// console.log("merge-- ", merge([1, 10, 50, 0], [2, 14, 99, 100]));
+
+// console.clear();
+// mergeSort
+const mergeSort = (a1) => {
+  // divide each eleent into single element
+  debugger;
+  if (a1.length <= 1) return a1;
+  let mid = Math.floor(a1.length / 2);
+  let left = mergeSort(a1.slice(0, mid));
+  let right = mergeSort(a1.slice(mid));
+  console.log("left---", left, "right--- ", right);
+  return merge(left, right);
+};
+
+console.log(mergeSort([10, 24, 76, 73]));
+
+// [10, 24, 76, 73]
+// [10, 24] -- [76 73]
+// [10] - [24] - [73] - [76]
+
+// [24, 10, 76, 73]
+// [10, 24] -- [76 73]
+// [10] - [24] - [73] - [76]
