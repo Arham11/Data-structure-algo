@@ -46,7 +46,7 @@ console.log("bubbleSort-- ", bubbleSort([4, 5, 3, 2, 6]));
 // 2) Selection Sort
 const selection = (a) => {
   // first looop
-  for (let i = 0; i < a.length; i++) {
+  for(let i = 0; i < a.length; i++) {
     // store min as first item
     let min = i;
     // second loop
@@ -196,13 +196,12 @@ const merge = (arr1, arr2) => {
   }
   return results;
 };
-// console.log("merge-- ", merge([1, 10, 50, 0], [2, 14, 99, 100]));
+// console.log("merge-- ", merge([1, 10, 50], [2, 14, 99, 100]));
 
 // console.clear();
 // mergeSort
 const mergeSort = (a1) => {
   // divide each eleent into single element
-  debugger;
   if (a1.length <= 1) return a1;
   let mid = Math.floor(a1.length / 2);
   let left = mergeSort(a1.slice(0, mid));
@@ -220,3 +219,133 @@ console.log(mergeSort([10, 24, 76, 73]));
 // [24, 10, 76, 73]
 // [10, 24] -- [76 73]
 // [10] - [24] - [73] - [76]
+
+// the below returns the correct index of the particular item
+function pivot(arr, start = 0, end = arr.length - 1) {
+  console.log("arr ---", arr);
+  const swap = (arr, idx1, idx2) => {
+    [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+  };
+
+  // We are assuming the pivot is always the first element
+  let pivot = arr[start];
+  let swapIdx = start;
+
+  for (let i = start + 1; i <= end; i++) {
+    if (pivot > arr[i]) {
+      swapIdx++;
+      swap(arr, swapIdx, i);
+    }
+  }
+
+  // Swap the pivot from the start the swapPoint
+  swap(arr, start, swapIdx);
+  console.log("swap index ---", swapIdx);
+  return swapIdx;
+}
+
+pivot([4, 8, 2, 1, 5, 7, 6, 3]);
+
+const quickSort = (a1, left = 0, right = a1.length - 1) => {
+  if (left < right) {
+    let pivotIndex = pivot(a1, left, right);
+
+    quickSort(a1, left, pivotIndex - 1);
+    quickSort(a1, pivotIndex + 1, right);
+  }
+  return a1;
+};
+
+console.log("quicksort ---", quickSort([4, 8, 2, 1, 5, 7, 6, 3]));
+
+console.clear();
+
+// get the digit from the positions passed
+function getDigit(num, i) {
+  // console.log(
+  //   "get Digit ---",
+  //   Math.floor((num % Math.pow(10, i + 1)) / Math.pow(10, i))
+  // );
+  return Math.floor((num % Math.pow(10, i + 1)) / Math.pow(10, i));
+}
+getDigit(7323, 0);
+
+// count the number of digit in the value
+function digitCount(num) {
+  //console.log("digitCount ---", num.toString().length);
+  return num?.toString().length;
+}
+digitCount(1234567);
+
+// count the biggest number from the array
+function mostDigit(arr) {
+  let max = 1;
+  for (let i of arr) {
+    if (digitCount(i) > max) max = digitCount(i);
+  }
+  // console.log(max);
+  return max;
+}
+mostDigit([1, 2, 116, 12345]);
+
+const radixSort = (arr, largest = 0) => {
+  if (largest > mostDigit(arr)) return arr;
+  let a0 = [],
+    a1 = [],
+    a2 = [],
+    a3 = [],
+    a4 = [],
+    a5 = [],
+    a6 = [],
+    a7 = [],
+    a8 = [],
+    a9 = [];
+  for (const item of arr) {
+    let digit = getDigit(item, largest);
+    switch (digit) {
+      case 0:
+        a0.push(item);
+        break;
+      case 1:
+        a1.push(item);
+        break;
+      case 2:
+        a2.push(item);
+        break;
+      case 3:
+        a3.push(item);
+        break;
+      case 4:
+        a4.push(item);
+        break;
+      case 5:
+        a5.push(item);
+        break;
+      case 6:
+        a6.push(item);
+        break;
+      case 7:
+        a7.push(item);
+        break;
+      case 8:
+        a8.push(item);
+        break;
+      case 9:
+        a9.push(item);
+        break;
+    }
+  }
+  debugger;
+
+  // concat all th;;;;e digit from 0-9
+  arr = [...a0, ...a1, ...a2, ...a3, ...a4, ...a5, ...a6, ...a7, ...a8, ...a9];
+  largest++;
+  return radixSort(arr, largest);
+};
+console.log(
+  "radixSort --",
+  radixSort([
+    3221, 1, 10, 9680, 577, 9420, 7, 5622, 4793, 2030, 3138, 82, 2599, 743,
+    4127,
+  ])
+);
