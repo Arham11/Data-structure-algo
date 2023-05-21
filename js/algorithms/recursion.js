@@ -355,3 +355,30 @@ console.log(
 );
 
 //console.clear();
+
+
+// a function to count 
+const countdown = function (n) {
+  // termination condition
+  if (n === 0 || n === -1) {
+    return [];
+  }
+  //return the value
+  return [n, ...countdown(n - 1)]      // [5, ...[4, ...[3, ...[2, ...[1]]]]]
+
+  // or return [n].concat(...countdown(n - 1))    //[5].concat([4].concat([3].concat([2].concat([1].concat([])))))
+}
+console.log(countdown(5))
+
+
+function rangeOfNumbers(startNum, endNum) {
+  // termination condition
+  if (startNum > endNum) {
+    return [];
+  }
+  //return the value
+  return [startNum, ...rangeOfNumbers(startNum + 1, endNum)];
+}
+
+console.log(rangeOfNumbers(0, 5))  // [0,1,2,3,4,5]
+
