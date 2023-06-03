@@ -48,13 +48,13 @@ class DoublyLinkedList {
       return popNode;
     }
   }
-  shift() {}
-  unshift() {}
-  get() {}
-  set() {}
-  insert() {}
-  remove() {}
-  reverse() {}
+  shift() { }
+  unshift() { }
+  get() { }
+  set() { }
+  insert() { }
+  remove() { }
+  reverse() { }
 }
 
 const list = new DoublyLinkedList();
