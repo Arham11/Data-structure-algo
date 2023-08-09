@@ -1,4 +1,5 @@
 // a basic example for recursion
+
 // console number in descending order
 const basicRecursion = (num) => {
   // terminate a function
@@ -381,4 +382,112 @@ function rangeOfNumbers(startNum, endNum) {
 }
 
 console.log(rangeOfNumbers(0, 5))  // [0,1,2,3,4,5]
+
+
+// The function should return an array containing repetitions of the number 
+// argument. For instance, replicate(5,3) should return [5,5,5]. 
+// If the times argument is negative, return an empty array.
+// https://www.codingame.com/playgrounds/5422/js-interview-prep-recursion
+
+const replicate = function (num, times) {
+  // termination condition
+  // if times < 0 return []
+  if (times <= 0) return []
+  // recursive calls with result
+  return [num].concat(replicate(num, times - 1))
+}
+console.log(replicate(5, 3)); // [5,5,5]
+console.log(replicate(5, -1)); // []
+
+console.clear();
+
+// Write a function that sums squares of numbers in list that 
+// may contain more nested lists of arrays inside it.
+// https://www.codingame.com/playgrounds/5422/js-interview-prep-recursion
+
+// with helper method
+const sumSquares = function (arr) {
+  // define result which is an empty array
+  let result = null;
+  // define a helper method
+  function helper(input) {
+    // loop over each variable
+    for (const element of input) {
+      // if typeof item is a number, push to result
+      if (!Array.isArray(element)) {
+        result = result + Math.pow(element, 2)
+      }
+      else {
+        helper(element)
+      }
+      // else recursive call
+    }
+  }
+  // call the helper method
+  helper(arr)
+  // return the result
+  console.log(result);
+}
+sumSquares([1, 2, 3]); // 14
+sumSquares([1, [2, 3]]); // 14
+sumSquares([[[[[[[[[1]]]]]]]]]); // 14
+sumSquares([10, [[10], 10], [10]]); // 400
+
+console.clear()
+
+// Write a function called contains that searches for a value in a nested object.
+// It returns true if the object contains that value.
+
+//  const nestedObject = {
+//   data: {
+//       info: {
+//           stuff: {
+//               thing: {
+//                   moreStuff: {
+//                       magicNumber: 44,
+//                       something: 'foo2'
+//                   }
+//               }
+//           }
+//       }
+//   }
+// }
+// let hasIt = contains(nestedObject, 44); // true
+// let doesntHaveIt = contains(nestedObject, "foo"); // false
+// https://www.codingame.com/playgrounds/5422/js-interview-prep-recursion
+
+const nestedObject = {
+  data: {
+    info: {
+      stuff: {
+        thing: {
+          moreStuff: {
+            magicNumber: 44,
+            something: 'foo2',
+            1: "abc"
+          }
+        }
+      }
+    }
+  }
+}
+const containsVal = function (obj, find) {
+  // loop over the object keys
+  for (let i of Object.keys(obj)) {
+    // if obj[keys] === object 
+    if (typeof obj[i] === "object" && !Array.isArray(obj[i]) && obj[i] !== null) {
+      //// recursion will happen
+      return containsVal(obj[i], find);
+    }
+    // else terminating condition
+    else {
+      //// see if value === find; return true 
+      if (obj[i] === find) {
+        return true
+      }
+    }
+  }
+  return false;
+}
+containsVal(nestedObject, 44)
 
