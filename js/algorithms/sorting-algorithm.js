@@ -46,7 +46,7 @@ console.log("bubbleSort-- ", bubbleSort([4, 5, 3, 2, 6]));
 // 2) Selection Sort
 const selection = (a) => {
   // first looop
-  for(let i = 0; i < a.length; i++) {
+  for (let i = 0; i < a.length; i++) {
     // store min as first item
     let min = i;
     // second loop
