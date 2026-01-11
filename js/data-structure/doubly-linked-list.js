@@ -1,9 +1,8 @@
-"use strict";
 class Node {
   constructor(val) {
-    this.pre = null;
     this.val = val;
     this.next = null;
+    this.prev = null;
   }
 }
 
@@ -14,50 +13,123 @@ class DoublyLinkedList {
     this.length = 0;
   }
   push(val) {
-    let newNode = new Node(val);
-    if (!this.length) {
+    var newNode = new Node(val);
+    if (this.length === 0) {
       this.head = newNode;
       this.tail = newNode;
-      this.length++;
-      return this;
     } else {
-      let current = this.head;
-      while (current.next) {
-        current = current.next;
-      }
-      current.next = newNode;
-      newNode.pre = current;
+      this.tail.next = newNode;
+      newNode.prev = this.tail;
       this.tail = newNode;
-      this.length++;
-      return current;
     }
+    this.length++;
+    return this;
   }
-
   pop() {
-    let popNode = this.tail;
-    if (!this.length) {
-      return undefined;
-    } else if (this.length === 1) {
-      return null;
+    if (!this.head) return undefined;
+    var poppedNode = this.tail;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
     } else {
-      // doubt : why does changing this.tail result in changing this.head
-      this.tail = this.tail.pre;
+      this.tail = poppedNode.prev;
       this.tail.next = null;
-      popNode.pre = null;
-      this.length--;
-      return popNode;
+      poppedNode.prev = null;
     }
+    this.length--;
+    return poppedNode;
   }
-  shift() {}
-  unshift() {}
-  get() {}
-  set() {}
-  insert() {}
-  remove() {}
-  reverse() {}
+  shift() {
+    if (this.length === 0) return undefined;
+    var oldHead = this.head;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = oldHead.next;
+      this.head.prev = null;
+      oldHead.next = null;
+    }
+    this.length--;
+    return oldHead;
+  }
+  unshift(val) {
+    var newNode = new Node(val);
+    if (this.length === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.head.prev = newNode;
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+    this.length++;
+    return this;
+  }
+  get(index) {
+    if (index < 0 || index >= this.length) return null;
+    var count, current;
+    if (index <= this.length / 2) {
+      count = 0;
+      current = this.head;
+      while (count !== index) {
+        current = current.next;
+        count++;
+      }
+    } else {
+      count = this.length - 1;
+      current = this.tail;
+      while (count !== index) {
+        current = current.prev;
+        count--;
+      }
+    }
+    return current;
+  }
+  set(index, val) {
+    var foundNode = this.get(index);
+    if (foundNode != null) {
+      foundNode.val = val;
+      return true;
+    }
+    return false;
+  }
+  insert(index, val) {
+    if (index < 0 || index > this.length) return false;
+    if (index === 0) return !!this.unshift(val);
+    if (index === this.length) return !!this.push(val);
+
+    let newNode = new Node(val); // 3
+    let pre = this.get(index - 1); // 1 2
+    let next = pre.next; // 4 => 5
+
+    newNode.next = next; // 3 4 => 5
+    newNode.pre = pre; // 3  4 => 5
+    next.pre = newNode;
+    pre.next = newNode; // 1 => 2  => 3 4 => 5
+
+    this.length++;
+    return true;
+  }
+  remove(index) {
+    if (index < 0 || index >= this.length) return undefined;
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+    var removedNode = this.get(index);
+    var beforeNode = removedNode.prev;
+    var afterNode = removedNode.next;
+    beforeNode.next = afterNode;
+    afterNode.prev = beforeNode;
+    // removedNode.prev.next = removedNode.next;
+    // removedNode.next.prev = removedNode.prev;
+    removedNode.next = null;
+    removedNode.prev = null;
+    this.length--;
+    return removedNode;
+  }
 }
 
-const list = new DoublyLinkedList();
-list.push(1);
-list.push(22);
-list.push(333);
+var list = new DoublyLinkedList();
+list.push("111");
+list.push("222");
+list.push("333");
