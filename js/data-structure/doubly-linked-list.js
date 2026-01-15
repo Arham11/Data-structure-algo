@@ -137,9 +137,23 @@ class DoublyLinkedList {
     this.length--;
     return removedNode;
   }
+  reverse() {
+    let current = this.head;
+    while (current != null) {
+      let nextNode = current.next;
+      current.next = current.prev;
+      current.prev = nextNode;
+      current.newNode;
+    }
+    current = this.head;
+    this.head = this.tail;
+    this.tail = current;
+    return this;
+  }
 }
 
 var list = new DoublyLinkedList();
 list.push("111");
 list.push("222");
 list.push("333");
+list.push("444");
