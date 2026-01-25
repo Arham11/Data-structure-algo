@@ -60,6 +60,75 @@ class BinarySearchtree {
       }
     }
   }
+  remove(value) {
+    // find the target
+    let target = this.root;
+    let parent;
+
+    while (target.value !== value) {
+      parent = target;
+      if (value < target.value) {
+        target = target.left;
+      } else {
+        target = target.right;
+      }
+    }
+    // target node is found
+
+    // if taget === root return null
+    if (target === this.root) return undefined;
+
+    //// if target has 0 child
+    if (target.right === null && target.left === null) {
+      if (parent.left === target) parent.left = null;
+      else parent.right = null;
+    }
+    //// if target has 2 child
+    else if (target.left !== null && target.right !== null) {
+      let minimumParent = target;
+      let minimum = target.right;
+
+      // if the target has no left which means no minimum needs to be found
+      if (minimum.left === null) {
+        minimum.left = target.left;
+        if (parent.left === target) {
+          parent.left = minimum;
+        } else {
+          parent.right = minimum;
+        }
+      }
+      // if the left exist , hence need to find the minimum
+      else {
+        while (minimum.left !== null) {
+          minimumParent = minimum;
+          minimum = minimum.left;
+        }
+        if (parent.left === target) {
+          parent.left.value = minimum.value;
+        } else {
+          parent.right.value = minimum.value;
+        }
+
+        if (minimum.right) {
+          minimumParent.left = minimum.right;
+        }
+      }
+    }
+    //// if target has 1 child (at left)
+    //// if target has 1 child (at right)
+    else {
+      if (parent.left === target) {
+        // delete the target and point whater target left or right is present
+        parent.left = target.right || target.left;
+      } else {
+        parent.right = target.right || target.left;
+      }
+    }
+
+    return target;
+  }
+
+  //
 }
 
 let tree = new BinarySearchtree();
@@ -71,3 +140,67 @@ tree.insert(11);
 tree.insert(2);
 tree.insert(16);
 tree.insert(7);
+
+// remove(value) {
+//   // find the node
+//   /// if node is not found return undefined
+//   // node found
+//   //// if node does not have ay child
+//   //// set its parent.left || parent.right as null
+//   //
+//   //// if node has one child, that child should replace the deleted node
+//   //// if node has two child, any of the child should replace the deletd node.
+//   if (!this.root) return undefined;
+
+//   let current = this.root;
+//   let pre = this.root;
+
+//   while (true) {
+//     if (!current) return undefined;
+//     let right = false;
+//     if (value === current.value) {
+//       let successorLeft = current.left;
+//       let successorRight = current.right;
+
+//       if (!successorLeft && !successorRight) {
+//         if (pre.left.value === value) {
+//           pre.left = null;
+//         } else {
+//           pre.right = null;
+//         }
+//         return;
+//       }
+//       if (successorLeft && !successorRight) {
+//         right ? (pre.right = successorLeft) : (pre.left = successorLeft);
+//         return;
+//       }
+//       if (successorRight && !successorLeft) {
+//         right ? (pre.right = successorLeft) : (pre.left = successorLeft);
+//         return;
+//       }
+
+//       if (successorLeft && successorRight) {
+//         if (right) {
+//           pre.right = successorRight;
+//           successorRight.left = successorLeft;
+//         } else {
+//           pre.left = successorLeft;
+//           successorLeft.right = successorRight;
+//         }
+//         return;
+//       }
+
+//       this.size--;
+//     }
+//     if (value > current.value) {
+//       pre = current;
+//       right = true;
+
+//       current = current.right;
+//     } else {
+//       pre = current;
+//       right = false;
+//       current = current.left;
+//     }
+//   }
+// }
