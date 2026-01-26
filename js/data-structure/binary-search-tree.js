@@ -60,6 +60,7 @@ class BinarySearchtree {
       }
     }
   }
+
   remove(value) {
     // find the target
     let target = this.root;
@@ -128,7 +129,79 @@ class BinarySearchtree {
     return target;
   }
 
-  //
+  deleteNodeUsingRecursion(value) {
+    this.root = this.delete(this.root, value);
+  }
+
+  delete(root, value) {
+    if (!root) return null;
+
+    if (root.value === value) {
+      // if no child
+      // if exactly one child
+      // if two child
+      console.log(root);
+      // no child
+      if (root.left === null && root.right === null) return null;
+      if (root.left !== null && root.right !== null) {
+        debugger;
+        // this a complicated edge case that we can't solve right away
+        //
+        // we could pick the root.left node, but what if (root.left.right !== null)? where
+        // are we going to attach our root.right subtree without overwriting any existing
+        // reference?
+        //
+        // also, we could pick the root.right node, but what if (root.right.left !== null) too?
+        //
+        // so, these are our two possible (and equivalent) options:
+        //      1) pick our root.right node as the root node, and find the minimum node in
+        //         the right subtree that has no left pointer, and assign the root.left node to it.
+        //
+        //      2) pick our root.left node as the root node, and find the maximum node in
+        //         the left subtree that has no right pointer, and assign the root.right node to it.
+        //
+        // here's an example of deleting node with val=5 without breaking the BST choosing option (1)
+        //
+        //                  5                     8
+        //               /     \                 / \
+        //              3*      8               7   9
+        //             / \     / \    --->     /
+        //            2   4   7   9           6
+        //                   /               /
+        //                  6               3*
+        //                                 / \
+        //                                2   4
+        //
+        // we'll choose option (1) and we'll find the minimum number in the right subtree that
+        // has no left pointer
+        // that one is going to be the node that will link to the left subtree of the current
+        // -soon to be deleted- node. by doing that we'll preserve the structure of the BST
+        // (nodes to the left of a node should be smaller, and numbers to the
+        // right should be greater).
+        let curr = root.right;
+        while (curr.left) {
+          curr = curr.left;
+        }
+        curr.left = root.left;
+        return root.right;
+      }
+      // one child at left
+      if (root.left) {
+        return root.left;
+      }
+      // one child at right
+      if (root.right) {
+        return root.right;
+      }
+    } else if (value > root.value) {
+      root.right = this.delete(root.right, value);
+      console.log(root.right);
+    } else {
+      root.left = this.delete(root.left, value);
+    }
+
+    return root;
+  }
 }
 
 let tree = new BinarySearchtree();
@@ -140,67 +213,3 @@ tree.insert(11);
 tree.insert(2);
 tree.insert(16);
 tree.insert(7);
-
-// remove(value) {
-//   // find the node
-//   /// if node is not found return undefined
-//   // node found
-//   //// if node does not have ay child
-//   //// set its parent.left || parent.right as null
-//   //
-//   //// if node has one child, that child should replace the deleted node
-//   //// if node has two child, any of the child should replace the deletd node.
-//   if (!this.root) return undefined;
-
-//   let current = this.root;
-//   let pre = this.root;
-
-//   while (true) {
-//     if (!current) return undefined;
-//     let right = false;
-//     if (value === current.value) {
-//       let successorLeft = current.left;
-//       let successorRight = current.right;
-
-//       if (!successorLeft && !successorRight) {
-//         if (pre.left.value === value) {
-//           pre.left = null;
-//         } else {
-//           pre.right = null;
-//         }
-//         return;
-//       }
-//       if (successorLeft && !successorRight) {
-//         right ? (pre.right = successorLeft) : (pre.left = successorLeft);
-//         return;
-//       }
-//       if (successorRight && !successorLeft) {
-//         right ? (pre.right = successorLeft) : (pre.left = successorLeft);
-//         return;
-//       }
-
-//       if (successorLeft && successorRight) {
-//         if (right) {
-//           pre.right = successorRight;
-//           successorRight.left = successorLeft;
-//         } else {
-//           pre.left = successorLeft;
-//           successorLeft.right = successorRight;
-//         }
-//         return;
-//       }
-
-//       this.size--;
-//     }
-//     if (value > current.value) {
-//       pre = current;
-//       right = true;
-
-//       current = current.right;
-//     } else {
-//       pre = current;
-//       right = false;
-//       current = current.left;
-//     }
-//   }
-// }
