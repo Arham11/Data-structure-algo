@@ -60,6 +60,7 @@ class BinarySearchtree {
       }
     }
   }
+
   remove(value) {
     // find the target
     let target = this.root;
@@ -147,6 +148,101 @@ class BinarySearchtree {
 
     return parent.value;
   }
+
+  isBalanced(node = this.root) {
+    if (node === null) {
+      return;
+    }
+    return maxDepth(node) - minDepth(node) <= 1;
+
+    function minDepth(node) {
+      if (node === null) {
+        return 0;
+      }
+      return 1 + Math.min(minDepth(node.left), minDepth(node.right));
+    }
+
+    function maxDepth(node) {
+      if (node === null) {
+        return 0;
+      }
+      return 1 + Math.max(maxDepth(node.left), maxDepth(node.right));
+    }
+  }
+
+  deleteNodeUsingRecursion(value) {
+    this.root = this.delete(this.root, value);
+  }
+
+  delete(root, value) {
+    if (!root) return null;
+
+    if (root.value === value) {
+      // if no child
+      // if exactly one child
+      // if two child
+      console.log(root);
+      // no child
+      if (root.left === null && root.right === null) return null;
+      if (root.left !== null && root.right !== null) {
+        debugger;
+        // this a complicated edge case that we can't solve right away
+        //
+        // we could pick the root.left node, but what if (root.left.right !== null)? where
+        // are we going to attach our root.right subtree without overwriting any existing
+        // reference?
+        //
+        // also, we could pick the root.right node, but what if (root.right.left !== null) too?
+        //
+        // so, these are our two possible (and equivalent) options:
+        //      1) pick our root.right node as the root node, and find the minimum node in
+        //         the right subtree that has no left pointer, and assign the root.left node to it.
+        //
+        //      2) pick our root.left node as the root node, and find the maximum node in
+        //         the left subtree that has no right pointer, and assign the root.right node to it.
+        //
+        // here's an example of deleting node with val=5 without breaking the BST choosing option (1)
+        //
+        //                  5                     8
+        //               /     \                 / \
+        //              3*      8               7   9
+        //             / \     / \    --->     /
+        //            2   4   7   9           6
+        //                   /               /
+        //                  6               3*
+        //                                 / \
+        //                                2   4
+        //
+        // we'll choose option (1) and we'll find the minimum number in the right subtree that
+        // has no left pointer
+        // that one is going to be the node that will link to the left subtree of the current
+        // -soon to be deleted- node. by doing that we'll preserve the structure of the BST
+        // (nodes to the left of a node should be smaller, and numbers to the
+        // right should be greater).
+        let curr = root.right;
+        while (curr.left) {
+          curr = curr.left;
+        }
+        curr.left = root.left;
+        return root.right;
+      }
+      // one child at left
+      if (root.left) {
+        return root.left;
+      }
+      // one child at right
+      if (root.right) {
+        return root.right;
+      }
+    } else if (value > root.value) {
+      root.right = this.delete(root.right, value);
+      console.log(root.right);
+    } else {
+      root.left = this.delete(root.left, value);
+    }
+
+    return root;
+  }
 }
 
 let tree = new BinarySearchtree();
@@ -159,66 +255,84 @@ tree.insert(2);
 tree.insert(16);
 tree.insert(7);
 
-// remove(value) {
-//   // find the node
-//   /// if node is not found return undefined
-//   // node found
-//   //// if node does not have ay child
-//   //// set its parent.left || parent.right as null
-//   //
-//   //// if node has one child, that child should replace the deleted node
-//   //// if node has two child, any of the child should replace the deletd node.
-//   if (!this.root) return undefined;
+/**
+ * @param {TreeNode} root
+ * @param {number} key
+ * @return {TreeNode}
+ */
+var deleteNode = function (root, key) {
+  if (!root) {
+    return null;
+  }
 
-//   let current = this.root;
-//   let pre = this.root;
+  if (root.val === key) {
+    // to delete a leaf node (no children) we can just return null
+    if (root.left === null && root.right === null) {
+      return null;
+    }
 
-//   while (true) {
-//     if (!current) return undefined;
-//     let right = false;
-//     if (value === current.value) {
-//       let successorLeft = current.left;
-//       let successorRight = current.right;
+    // at this point we need to delete the current node. so, we need to return a different one
+    // we need to pick either the left or the right node
 
-//       if (!successorLeft && !successorRight) {
-//         if (pre.left.value === value) {
-//           pre.left = null;
-//         } else {
-//           pre.right = null;
-//         }
-//         return;
-//       }
-//       if (successorLeft && !successorRight) {
-//         right ? (pre.right = successorLeft) : (pre.left = successorLeft);
-//         return;
-//       }
-//       if (successorRight && !successorLeft) {
-//         right ? (pre.right = successorLeft) : (pre.left = successorLeft);
-//         return;
-//       }
+    if (root.left !== null && root.right !== null) {
+      // this a complicated edge case that we can't solve right away
+      //
+      // we could pick the root.left node, but what if (root.left.right !== null)? where
+      // are we going to attach our root.right subtree without overwriting any existing
+      // reference?
+      //
+      // also, we could pick the root.right node, but what if (root.right.left !== null) too?
+      //
+      // so, these are our two possible (and equivalent) options:
+      //      1) pick our root.right node as the root node, and find the minimum node in
+      //         the right subtree that has no left pointer, and assign the root.left node to it.
+      //
+      //      2) pick our root.left node as the root node, and find the maximum node in
+      //         the left subtree that has no right pointer, and assign the root.right node to it.
+      //
+      // here's an example of deleting node with val=5 without breaking the BST choosing option (1)
+      //
+      //                  5                     8
+      //               /     \                 / \
+      //              3*      8               7   9
+      //             / \     / \    --->     /
+      //            2   4   7   9           6
+      //                   /               /
+      //                  6               3*
+      //                                 / \
+      //                                2   4
+      //
+      // we'll choose option (1) and we'll find the minimum number in the right subtree that
+      // has no left pointer
+      // that one is going to be the node that will link to the left subtree of the current
+      // -soon to be deleted- node. by doing that we'll preserve the structure of the BST
+      // (nodes to the left of a node should be smaller, and numbers to the
+      // right should be greater).
+      let curr = root.right;
+      while (curr.left) {
+        curr = curr.left;
+      }
+      curr.left = root.left;
+      return root.right;
+    }
 
-//       if (successorLeft && successorRight) {
-//         if (right) {
-//           pre.right = successorRight;
-//           successorRight.left = successorLeft;
-//         } else {
-//           pre.left = successorLeft;
-//           successorLeft.right = successorRight;
-//         }
-//         return;
-//       }
+    // if left/right is null, then we can safely pick the one that is not null without
+    // breaking the BST
+    if (root.left === null) {
+      return root.right;
+    }
+    if (root.right === null) {
+      return root.left;
+    }
+  }
 
-//       this.size--;
-//     }
-//     if (value > current.value) {
-//       pre = current;
-//       right = true;
+  if (key < root.val) {
+    // look for our target node in the left subtree
+    root.left = deleteNode(root.left, key);
+  } else {
+    // look for our target node in the right subtree
+    root.right = deleteNode(root.right, key);
+  }
 
-//       current = current.right;
-//     } else {
-//       pre = current;
-//       right = false;
-//       current = current.left;
-//     }
-//   }
-// }
+  return root;
+};
