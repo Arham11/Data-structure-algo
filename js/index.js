@@ -42,88 +42,6 @@ class BinarySearchTree {
     }
   }
 
-  find(value) {
-    if (!this.root) return undefined;
-    let current = this.root;
-    while (true) {
-      if (!current) return undefined;
-      if (current.value === value) return current;
-      if (value > current.value) {
-        current = current.right;
-      } else {
-        current = current.left;
-      }
-    }
-  }
-
-  remove(value) {
-    // find the target
-    let target = this.root;
-    let parent;
-
-    while (target.value !== value) {
-      parent = target;
-      if (value < target.value) {
-        target = target.left;
-      } else {
-        target = target.right;
-      }
-    }
-    // target node is found
-
-    // if taget === root return null
-    if (target === this.root) return undefined;
-
-    //// if target has 0 child
-    if (target.right === null && target.left === null) {
-      if (parent.left === target) parent.left = null;
-      else parent.right = null;
-    }
-    //// if target has 2 child
-    else if (target.left !== null && target.right !== null) {
-      let minimumParent = target;
-      let minimum = target.right;
-
-      // if the target has no left which means no minimum needs to be found
-      if (minimum.left === null) {
-        minimum.left = target.left;
-        if (parent.left === target) {
-          parent.left = minimum;
-        } else {
-          parent.right = minimum;
-        }
-      }
-      // if the left exist , hence need to find the minimum
-      else {
-        while (minimum.left !== null) {
-          minimumParent = minimum;
-          minimum = minimum.left;
-        }
-        if (parent.left === target) {
-          parent.left.value = minimum.value;
-        } else {
-          parent.right.value = minimum.value;
-        }
-
-        if (minimum.right) {
-          minimumParent.left = minimum.right;
-        }
-      }
-    }
-    //// if target has 1 child (at left)
-    //// if target has 1 child (at right)
-    else {
-      if (parent.left === target) {
-        // delete the target and point whater target left or right is present
-        parent.left = target.right || target.left;
-      } else {
-        parent.right = target.right || target.left;
-      }
-    }
-
-    return target;
-  }
-
   findSecondLargest() {
     if (!this.root || (!this.root.left && !this.root.right)) return;
 
@@ -143,9 +61,29 @@ class BinarySearchTree {
 
     return parent.value;
   }
+
+  isBalanced(node = this.root) {
+    if (node === null) {
+      return;
+    }
+    return maxDepth(node) - minDepth(node) <= 1;
+
+    function minDepth(node) {
+      if (node === null) {
+        return 0;
+      }
+      return 1 + Math.min(minDepth(node.left), minDepth(node.right));
+    }
+
+    function maxDepth(node) {
+      if (node === null) {
+        return 0;
+      }
+      return 1 + Math.max(maxDepth(node.left), maxDepth(node.right));
+    }
+  }
 }
 let tree = new BinarySearchTree();
-let tree1 = new BinarySearchTree();
 
 tree.insert(11);
 tree.insert(6);
@@ -154,6 +92,9 @@ tree.insert(19);
 tree.insert(4);
 tree.insert(8);
 tree.insert(17);
+tree.insert(14);
+tree.insert(18);
+
 tree.insert(43);
 tree.insert(5);
 tree.insert(7);
@@ -163,18 +104,10 @@ tree.insert(31);
 
 tree.insert(49);
 tree.insert(28);
-// tree.insert(32);
-
-tree.insert(56);
 tree.insert(33);
-
-tree.insert(27);
+tree.insert(56);
 tree.insert(20);
-
-tree1.insert(10);
-tree1.insert(20);
-tree1.insert(15);
-tree1.insert(14);
+tree.insert(27);
 
 //                10
 //       5                13
@@ -243,3 +176,13 @@ tree1.insert(14);
 }
   
 */
+
+// function abc(arr, index = 0) {
+//   // base condition
+//   if (index === arr.length) return;
+//   console.log(arr[index]);
+//   index++;
+//   abc(arr, index);
+// }
+
+// abc([1, 2, 3, 4]);
