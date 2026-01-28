@@ -129,6 +129,26 @@ class BinarySearchtree {
     return target;
   }
 
+  findSecondLargest() {
+    if (!this.root || (!this.root.left && !this.root.right)) return;
+
+    let current = this.root;
+    let parent = null;
+
+    while (current.right) {
+      parent = current;
+      current = current.right;
+    }
+
+    if (current.left) {
+      current = current.left;
+      while (current.right) current = current.right;
+      return current.value;
+    }
+
+    return parent.value;
+  }
+
   deleteNodeUsingRecursion(value) {
     this.root = this.delete(this.root, value);
   }
@@ -205,11 +225,27 @@ class BinarySearchtree {
 }
 
 let tree = new BinarySearchtree();
-tree.insert(10);
-tree.insert(5);
-tree.insert(13);
 
 tree.insert(11);
-tree.insert(2);
-tree.insert(16);
+tree.insert(6);
+tree.insert(19);
+
+tree.insert(4);
+tree.insert(8);
+tree.insert(17);
+tree.insert(14);
+tree.insert(18);
+
+tree.insert(43);
+tree.insert(5);
 tree.insert(7);
+
+// tree.insert(10);
+tree.insert(31);
+
+tree.insert(49);
+tree.insert(28);
+tree.insert(33);
+tree.insert(56);
+tree.insert(20);
+tree.insert(27);
