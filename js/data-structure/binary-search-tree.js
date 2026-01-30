@@ -222,6 +222,35 @@ class BinarySearchtree {
 
     return root;
   }
+
+  maxheight() {
+    const maxDepth = function (node) {
+      // terminate condition
+      if (node === null) return 0;
+      let lh = maxDepth(node.left);
+      let rh = maxDepth(node.right);
+
+      return 1 + Math.max(lh, rh);
+    };
+    return maxDepth(this.root);
+  }
+
+  isBalanced() {
+    let dfs = function (node) {
+      if (!node) return 0;
+      let leftHeight = dfs(node.left);
+      if (leftHeight === -1) return -1;
+
+      let rightHeight = dfs(node.right);
+      if (rightHeight === -1) return -1;
+
+      if (Math.abs(leftHeight - rightHeight) > 1) return -1;
+      debugger;
+      return Math.max(leftHeight, rightHeight) + 1;
+    };
+
+    return dfs(this.root) !== -1;
+  }
 }
 
 let tree = new BinarySearchtree();
@@ -249,3 +278,29 @@ tree.insert(33);
 tree.insert(56);
 tree.insert(20);
 tree.insert(27);
+
+//                 11                          <=       level1
+//       /--------------------\
+//      6                      19              <=       level2
+//  /-------\               /------\
+// 4         8            17        43         <=       level3
+
+//
+
+//
+
+//
+
+//                 11                               <=       level1
+//       /--------------------\
+//      6                      19                   <=       level2
+//  /-------\               /------\
+// 4         8            17        43              <=       level3
+//  \      /   \         /  \      /   \
+//   5    7    10      14  18    31    49           <=       level4
+//                              / \     \
+//                            28  33    56          <=       level5
+//                           /
+//                          20                      <=       level6
+//                            \
+//                            27                    <=       level7
