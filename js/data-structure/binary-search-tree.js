@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class BinarySearchtree {
+class BinarySearchTree {
   constructor() {
     this.root = null;
     this.size = 0;
@@ -251,33 +251,92 @@ class BinarySearchtree {
 
     return dfs(this.root) !== -1;
   }
+
+  // Breadth First Search
+  BFT() {
+    let node = this.root;
+    const queue = [];
+    const data = [];
+    queue.push(node);
+    while (queue.length) {
+      node = queue.shift();
+      data.push(node.value);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    return data;
+  }
+
+  // Depth First Search
+  // pre-order (traverse to the left leaf node)
+  // []
+  DFTPreorder() {
+    let data = [];
+    function preOrder(node) {
+      data.push(node.value);
+      // base condition to return null at leaf node
+      if (node.left) preOrder(node.left);
+      if (node.right) preOrder(node.right);
+    }
+    preOrder(this.root);
+    return data;
+  }
+
+  // post order , traverse the leaf nodes first (last levels)
+  DFTPostorder() {
+    let data = [];
+    function postOrder(node) {
+      // base condition to return null at leaf node
+      if (node.left) postOrder(node.left);
+      if (node.right) postOrder(node.right);
+      data.push(node.value);
+    }
+    postOrder(this.root);
+    return data;
+  }
+
+  // post order , traverse the leaf nodes first (last levels)
+  DFTInorder() {
+    let data = [];
+    function inOrder(node) {
+      // base condition to return null at leaf node
+      if (node.left) inOrder(node.left);
+      data.push(node.value);
+      if (node.right) inOrder(node.right);
+    }
+    inOrder(this.root);
+    return data;
+  }
 }
 
-let tree = new BinarySearchtree();
+let tree = new BinarySearchTree();
 
 tree.insert(11);
+
 tree.insert(6);
 tree.insert(19);
 
 tree.insert(4);
 tree.insert(8);
 tree.insert(17);
-tree.insert(14);
-tree.insert(18);
-
 tree.insert(43);
+
 tree.insert(5);
 tree.insert(7);
-
-// tree.insert(10);
+tree.insert(10);
+tree.insert(14);
+tree.insert(18);
 tree.insert(31);
-
 tree.insert(49);
+
 tree.insert(28);
 tree.insert(33);
 tree.insert(56);
+
 tree.insert(20);
 tree.insert(27);
+
+// tree.isBalancedfunction();
 
 //                 11                          <=       level1
 //       /--------------------\
@@ -304,3 +363,19 @@ tree.insert(27);
 //                          20                      <=       level6
 //                            \
 //                            27                    <=       level7
+
+let tree1 = new BinarySearchTree();
+tree1.insert(10);
+
+tree1.insert(6);
+tree1.insert(15);
+
+tree1.insert(3);
+tree1.insert(8);
+tree1.insert(20);
+
+//                   10
+//                /      \
+//            6            15
+//          /  \              \
+//        3     8               20
