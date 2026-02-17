@@ -65,23 +65,101 @@ class BinaryHeapTreeMax {
 
 // [41, 39, 33, 18, 27, 12]
 
-const values = new BinaryHeapTreeMax();
-values.insert(10);
-values.insert(44);
-values.insert(26);
-values.insert(5);
+const heap = new BinaryHeapTreeMax();
+heap.insert(10);
+heap.insert(44);
+heap.insert(26);
+heap.insert(5);
 
-values.insert(19);
-values.insert(63);
-values.insert(11);
-values.insert(56);
-values.insert(91);
+heap.insert(19);
+heap.insert(63);
+heap.insert(11);
+heap.insert(56);
+heap.insert(91);
 
-const heap1 = new BinaryHeapTreeMax();
+// PriorityQueue using binary heap tree concept
 
-heap1.insert(52);
-heap1.insert(50);
-heap1.insert(55);
-heap1.insert(51);
-heap1.insert(56);
-heap1.insert(60);
+class Node {
+  constructor(value, priority) {
+    this.value = value;
+    this.priority = priority;
+  }
+}
+class PriorityQueue {
+  constructor() {
+    this.queue = [];
+  }
+
+  insert(value, priority) {
+    const newNode = new Node(value, priority);
+    this.queue.push(newNode);
+    this.bubbleUp();
+  }
+
+  bubbleUp() {
+    let index = this.queue.length - 1;
+    const element = this.queue[index];
+    while (index > 0) {
+      let parentIndex = Math.floor((index - 1) / 2);
+      let parent = this.queue[parentIndex];
+      if (element.priority <= parent.priority) break;
+      this.queue[parentIndex] = element;
+      this.queue[index] = parent;
+      index = parentIndex;
+    }
+  }
+
+  swap(i, j) {
+    [this.queue[i], this.queue[j]] = [this.queue[j], this.queue[i]];
+  }
+  extractMax() {
+    if (this.queue.length === 0) return null;
+    if (this.queue.length === 1) {
+      let max = this.queue.pop();
+      return max;
+    }
+    let max = this.queue[0];
+    let end = this.queue.pop();
+    this.queue[0] = end;
+    this.sinkDown();
+    return max;
+  }
+  sinkDown() {
+    let index = 0;
+    const length = this.queue.length;
+    while (true) {
+      let largest = index;
+      // left value would 2n+1
+      const left = 2 * index + 1;
+      // left value would 2n+2
+      const right = 2 * index + 2;
+      if (
+        left < length &&
+        this.queue[largest].priority < this.queue[left].priority
+      ) {
+        largest = left;
+      }
+      if (
+        right < length &&
+        this.queue[largest].priority < this.queue[right].priority
+      ) {
+        largest = right;
+      }
+      if (largest === index) {
+        break; // stop when values property is satisfied
+      } else {
+        this.swap(index, largest);
+        index = largest;
+      }
+    }
+  }
+}
+
+const pq = new PriorityQueue();
+pq.insert("High fever", 20);
+pq.insert("fever", 10);
+pq.insert("accident", 40);
+pq.insert("fall from building", 45);
+pq.insert("dengue", 25);
+pq.insert("nothing", 8);
+pq.insert("scam", 5);
