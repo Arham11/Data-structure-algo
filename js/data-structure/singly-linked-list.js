@@ -127,6 +127,23 @@ class SinglyLinkedList {
     current.val = newVal;
     return current;
   }
+
+  set1(index, val) {
+    if (!this.head || index > this.length) return null;
+    let current = this.head;
+    let count = 0;
+
+    while (current) {
+      if (count === index) {
+        current.value = val;
+        if (count === this.length) this.tail.value = val;
+        return current.value;
+      }
+      current = current.next;
+      count++;
+    }
+  }
+
   // doubt : not able to get how list is getting mutated
   insert(index, val) {
     if (index === 0) return list.unshift(val);
@@ -141,6 +158,31 @@ class SinglyLinkedList {
     newNode.next = temp;
     this.length++;
   }
+
+  insert1(index, value) {
+    if (index === 0) return list.unshift(val);
+    if (index === this.length) return list.push(val);
+    if (index < 0 || index > this.length) return false;
+    let newNode = new Node(value);
+    let current = this.head;
+    let pre = this.get(index - 1);
+    let count = 0;
+
+    while (current) {
+      if (count === index) {
+        pre.next = newNode;
+        newNode.next = current;
+        // tail condition
+        if (count === this.length) {
+          this.tail.value = val;
+        }
+        return current.value;
+      }
+      current = current.next;
+      count++;
+    }
+  }
+
   // doubt : not able to get how list is getting mutated
   remove(index) {
     if (index === 0) return list.shift();
