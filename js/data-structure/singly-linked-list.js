@@ -49,8 +49,8 @@ class SinglyLinkedList {
     // increement lenght
 
     this.length++;
-    // return list
-    return list;
+    // return this
+    return this;
   }
 
   // hi => deepika => arham => !
@@ -84,7 +84,7 @@ class SinglyLinkedList {
     this.head = this.head.next;
     this.length--;
     if (this.length === 0) this.tail = null;
-    return list;
+    return this;
   }
 
   unshift(val) {
@@ -98,7 +98,7 @@ class SinglyLinkedList {
     }
 
     this.length++;
-    return list;
+    return this;
   }
 
   get(index) {
@@ -146,10 +146,10 @@ class SinglyLinkedList {
 
   // doubt : not able to get how list is getting mutated
   insert(index, val) {
-    if (index === 0) return list.unshift(val);
-    if (index === this.length) return list.push(val);
+    if (index === 0) return this.unshift(val);
+    if (index === this.length) return this.push(val);
     if (index < 0 || index > this.length) return false;
-    console.log(list);
+    console.log(this);
     let pre = this.get(index - 1);
     console.log(pre, "--pre");
     const newNode = new Node(val);
@@ -159,25 +159,23 @@ class SinglyLinkedList {
     this.length++;
   }
 
-  insert1(index, value) {
-    if (index === 0) return list.unshift(val);
-    if (index === this.length) return list.push(val);
+  insert1(index, val) {
+    if (index === 0) return this.unshift(val);
+    if (index === this.length) return this.push(val);
     if (index < 0 || index > this.length) return false;
-    let newNode = new Node(value);
+    let newNode = new Node(val);
     let current = this.head;
-    let pre = this.get(index - 1);
+    let pre = null;
     let count = 0;
 
     while (current) {
       if (count === index) {
         pre.next = newNode;
         newNode.next = current;
-        // tail condition
-        if (count === this.length) {
-          this.tail.value = val;
-        }
+        this.length++;
         return current.value;
       }
+      pre = current;
       current = current.next;
       count++;
     }
@@ -185,8 +183,8 @@ class SinglyLinkedList {
 
   // doubt : not able to get how list is getting mutated
   remove(index) {
-    if (index === 0) return list.shift();
-    if (index === this.length) return list.pop();
+    if (index === 0) return this.shift();
+    if (index === this.length) return this.pop();
     if (index > this.length) return false;
 
     let current = this.get(index - 1);
