@@ -15,6 +15,8 @@ class Stack {
     this.last = null;
     this.size = 0;
   }
+
+  // Time complexity = O(n)
   push(val) {
     if (!this.first) {
       this.first = new Node(val);
@@ -26,6 +28,8 @@ class Stack {
     }
     return ++this.size;
   }
+
+  // Time complexity = O(n)
   pop() {
     if (!this.first) return null;
     let oldfirst = this.first;

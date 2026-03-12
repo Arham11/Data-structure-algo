@@ -11,6 +11,8 @@ class Queue {
     this.tail = null;
     this.length = 0;
   }
+
+  // Time complexity = O(n)
   enqueue(val) {
     let newNode = new Node(val);
     if (!this.head) {
@@ -23,6 +25,7 @@ class Queue {
     return ++this.length;
   }
 
+  // Time complexity = O(n)
   dequeue() {
     if (!this.head) return null;
     let oldHead = this.head;
