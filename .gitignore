@@ -1,1 +1,18 @@
-node_modules
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore dependency folders
+node_modules/
+venv/
+env/
+
+# Ignore build artifacts and temporary files
+dist/
+build/
+*.log
+*.tmp
+
+# Ignore environment variables/secrets
+.env
+

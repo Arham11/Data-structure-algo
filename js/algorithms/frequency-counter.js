@@ -1,4 +1,6 @@
-document.querySelector("h1").innerText = "Frequency Counter";
+if (typeof document !== "undefined") {
+  document.querySelector("h1").innerText = "Frequency Counter";
+}
 
 // to calculate if given array have same frequency or not .
 // array1 should be square of array2 , order of items does not matter.
@@ -115,8 +117,8 @@ console.log(
       16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9,
       1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4,
       9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9,
-    ]
-  )
+    ],
+  ),
 );
 console.timeEnd("same using sort");
 
@@ -241,8 +243,8 @@ console.log(
       16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9,
       1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4,
       9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9, 1, 16, 4, 9,
-    ]
-  )
+    ],
+  ),
 );
 console.timeEnd("same using frequency counter");
 
@@ -264,7 +266,7 @@ const same2 = function (a1, a2) {
   });
 
   // compare if key and value pair of o1 === o2
-  for (key in o1) {
+  for (const key in o1) {
     if (o1[key] !== o2[key]) {
       return false;
     }
@@ -284,34 +286,33 @@ console.log("sameFrequency2", same2([1, 3, 2, 10], [4, 1, 9, 100]));
 // Input: (s = "rat"), (t = "car");
 // Output: false;
 const validAnagram = (s1, s2) => {
-  // check if length of s1 and s2 are equal
+  // 1. If lengths differ, they can't be anagrams
   if (s1.length !== s2.length) {
     return false;
   }
 
   let o1 = {};
   let o2 = {};
-  // map each char of o1
-  for (ele of s1) {
-    o1[ele]++ || (o1[ele] = 1);
+
+  // 2. Count occurrences of each character in the first string
+  for (const char of s1) {
+    o1[char] ? o1[char]++ : (o1[char] = 1);
   }
 
-  // map each char of o2
-  for (ele of s2) {
-    o2[ele]++ || (o2[ele] = 1);
+  // 3. Count occurrences of each character in the second string
+  for (const char of s2) {
+    o2[char] ? o2[char]++ : (o2[char] = 1);
   }
 
-  // verify if key and value of o1 is present in o2
-  for (ele of s1) {
-    //  check keys of o2
-    if (!(ele in o2)) {
-      return false;
-    }
-    // check values o1 and o2
-    if (o1[ele] !== o2[ele]) {
+  // 4. Compare character counts between both frequency maps
+  for (const key in o1) {
+    // If a character's count doesn't match, return false
+    if (o1[key] !== o2[key]) {
       return false;
     }
   }
+
+  // 5. If all counts match, it's a valid anagram
   return true;
 };
 console.log("validAnagram - ", validAnagram("rat", "car"));
@@ -355,3 +356,12 @@ function areThereDuplicates(...a) {
 console.log(areThereDuplicates(1, 2, 3)); // false
 console.log(areThereDuplicates(1, 2, 2)); // true
 console.log(areThereDuplicates("a", "b", "c", "a")); // true
+
+module.exports = {
+  same,
+  same1,
+  same2,
+  validAnagram,
+  uniqueOccurrences,
+  areThereDuplicates,
+};
