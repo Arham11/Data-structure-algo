@@ -62,7 +62,7 @@ const collectOddValues = (a) => {
 };
 console.log(
   "collectOddValues-- ",
-  collectOddValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 233, 345, 666])
+  collectOddValues([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 233, 345, 666]),
 );
 
 // Write a function called power which accepts a base and an exponent.
@@ -144,7 +144,7 @@ function palindromeUsingPureRecursion(str) {
 }
 console.log(
   "palindromeUsingPureRecursion-- ",
-  palindromeUsingPureRecursion("tacocat")
+  palindromeUsingPureRecursion("tacocat"),
 );
 
 // Write a recursive function called flatten which accepts an array of arrays and returns
@@ -157,18 +157,17 @@ console.log(
 const flatten = (a) => {
   let result = [];
   // loop over each item in array
-  for (let i = 0; i < a.length; i++) {
+  for (const item of a) {
     // check if first item is type of array or not
-    if (Array.isArray(a[i])) {
+    if (Array.isArray(item)) {
       // console.log("array is-- ", a[i]);
       // if array recursion happens
-      result = result.concat(flatten(a[i]));
+      result = result.concat(flatten(item));
       // result = [...result, ...flatten(a[i])];
       //// terminating conditon if(!arr.length) return
     } else {
-      // console.log("number is-- ", a[i]);
       // if not array push to result
-      result.push(a[i]);
+      result.push(item);
     }
   }
   // return result and maintain it
@@ -231,7 +230,7 @@ console.log(
         alsoNotANumber: "yup",
       },
     },
-  })
+  }),
 );
 console.log(
   "nestedEvenSum-- ",
@@ -241,7 +240,7 @@ console.log(
     c: { c: { c: 2 }, cc: "ball", ccc: 5 },
     d: 1,
     e: { e: { e: 2 }, ee: "car" },
-  })
+  }),
 );
 
 // Write a recursive function called capitalizeWords. Given an array of words, return a new
@@ -263,7 +262,7 @@ const capitalizeWords = (arr) => {
 };
 console.log(
   "capitalizeWords-- ",
-  capitalizeWords(["i", "am", "learning", "recursion"])
+  capitalizeWords(["i", "am", "learning", "recursion"]),
 );
 
 // Write a function called stringifyNumbers which takes in an object and finds all of the values
@@ -304,7 +303,7 @@ console.log(
         },
       },
     },
-  })
+  }),
 );
 
 console.log(
@@ -319,7 +318,7 @@ console.log(
         random: "663",
       },
     },
-  })
+  }),
 );
 
 const collectStrings = (obj) => {
@@ -352,25 +351,23 @@ console.log(
         },
       },
     },
-  })
+  }),
 );
 
 //console.clear();
 
-
-// a function to count 
+// a function to count
 const countdown = function (n) {
   // termination condition
   if (n === 0 || n === -1) {
     return [];
   }
   //return the value
-  return [n, ...countdown(n - 1)]      // [5, ...[4, ...[3, ...[2, ...[1]]]]]
+  return [n, ...countdown(n - 1)]; // [5, ...[4, ...[3, ...[2, ...[1]]]]]
 
   // or return [n].concat(...countdown(n - 1))    //[5].concat([4].concat([3].concat([2].concat([1].concat([])))))
-}
-console.log(countdown(5))
-
+};
+console.log(countdown(5));
 
 function rangeOfNumbers(startNum, endNum) {
   // termination condition
@@ -381,27 +378,26 @@ function rangeOfNumbers(startNum, endNum) {
   return [startNum, ...rangeOfNumbers(startNum + 1, endNum)];
 }
 
-console.log(rangeOfNumbers(0, 5))  // [0,1,2,3,4,5]
+console.log(rangeOfNumbers(0, 5)); // [0,1,2,3,4,5]
 
-
-// The function should return an array containing repetitions of the number 
-// argument. For instance, replicate(5,3) should return [5,5,5]. 
+// The function should return an array containing repetitions of the number
+// argument. For instance, replicate(5,3) should return [5,5,5].
 // If the times argument is negative, return an empty array.
 // https://www.codingame.com/playgrounds/5422/js-interview-prep-recursion
 
 const replicate = function (num, times) {
   // termination condition
   // if times < 0 return []
-  if (times <= 0) return []
+  if (times <= 0) return [];
   // recursive calls with result
-  return [num].concat(replicate(num, times - 1))
-}
+  return [num].concat(replicate(num, times - 1));
+};
 console.log(replicate(5, 3)); // [5,5,5]
 console.log(replicate(5, -1)); // []
 
 console.clear();
 
-// Write a function that sums squares of numbers in list that 
+// Write a function that sums squares of numbers in list that
 // may contain more nested lists of arrays inside it.
 // https://www.codingame.com/playgrounds/5422/js-interview-prep-recursion
 
@@ -415,25 +411,24 @@ const sumSquares = function (arr) {
     for (const element of input) {
       // if typeof item is a number, push to result
       if (!Array.isArray(element)) {
-        result = result + Math.pow(element, 2)
-      }
-      else {
-        helper(element)
+        result = result + Math.pow(element, 2);
+      } else {
+        helper(element);
       }
       // else recursive call
     }
   }
   // call the helper method
-  helper(arr)
+  helper(arr);
   // return the result
   console.log(result);
-}
+};
 sumSquares([1, 2, 3]); // 14
 sumSquares([1, [2, 3]]); // 14
 sumSquares([[[[[[[[[1]]]]]]]]]); // 14
 sumSquares([10, [[10], 10], [10]]); // 400
 
-console.clear()
+console.clear();
 
 // Write a function called contains that searches for a value in a nested object.
 // It returns true if the object contains that value.
@@ -463,31 +458,34 @@ const nestedObject = {
         thing: {
           moreStuff: {
             magicNumber: 44,
-            something: 'foo2',
-            1: "abc"
-          }
-        }
-      }
-    }
-  }
-}
+            something: "foo2",
+            1: "abc",
+          },
+        },
+      },
+    },
+  },
+};
 const containsVal = function (obj, find) {
   // loop over the object keys
   for (let i of Object.keys(obj)) {
-    // if obj[keys] === object 
-    if (typeof obj[i] === "object" && !Array.isArray(obj[i]) && obj[i] !== null) {
+    // if obj[keys] === object
+    if (
+      typeof obj[i] === "object" &&
+      !Array.isArray(obj[i]) &&
+      obj[i] !== null
+    ) {
       //// recursion will happen
       return containsVal(obj[i], find);
     }
     // else terminating condition
     else {
-      //// see if value === find; return true 
+      //// see if value === find; return true
       if (obj[i] === find) {
-        return true
+        return true;
       }
     }
   }
   return false;
-}
-containsVal(nestedObject, 44)
-
+};
+containsVal(nestedObject, 44);
