@@ -11,6 +11,11 @@ class BinarySearchTree {
     this.root = null;
     this.size = 0;
   }
+
+  // insert/build a BST based on left and right node
+  // Time Complexity :
+  // Worst case scenario (Skewed BST) = O(n)
+  // Average case = O(log n)
   insert(value) {
     let newNode = new Node(value);
     if (!this.root) {
@@ -47,6 +52,10 @@ class BinarySearchTree {
     }
   }
 
+  // return the node based on the value
+  // Time Complexity :
+  // Worst case scenario (Skewed BST) = O(n)
+  // Average case = O(log n)
   find(value) {
     if (!this.root) return undefined;
     let current = this.root;
@@ -164,7 +173,6 @@ class BinarySearchTree {
       // no child
       if (root.left === null && root.right === null) return null;
       if (root.left !== null && root.right !== null) {
-        debugger;
         // this a complicated edge case that we can't solve right away
         //
         // we could pick the root.left node, but what if (root.left.right !== null)? where
